@@ -27,5 +27,6 @@ namespace pet_hotel.Models
                 // Add this 👇
         // Name of field ("Bakers") is what DB table will be called!
         public DbSet<PetOwner> PetOwners {get; set;}
+        public DbSet<Pet> Pets {get; set;}
     }
 }

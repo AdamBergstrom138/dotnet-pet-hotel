@@ -35,9 +35,9 @@ namespace pet_hotel
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public PetBreedType type {get; set;}
 
-        [JsonConverter(typeof(JsonStringEnumConverter))]
+        // [JsonConverter(typeof(JsonStringEnumConverter))]
 
-        // public PetColorType type {get; set;}
+        // public PetColorType type2 {get; set;}
 
 
         [ForeignKey("petOwner")]

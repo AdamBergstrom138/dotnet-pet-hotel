@@ -21,10 +21,72 @@ namespace pet_hotel.Controllers
 
         // This is just a stub for GET / to prevent any weird frontend errors that 
         // occur when the route is missing in this controller
+        // [HttpGet]
+        // public IEnumerable<Pet> GetPets() {
+        //     return new List<Pet>();
+        // }
         [HttpGet]
-        public IEnumerable<Pet> GetPets() {
-            return new List<Pet>();
+        public IEnumerable<Pet> GetPets() 
+        {
+            return _context.Pets
+                // Include the `bakedBy` property
+                // which is a list of `Baker` objects
+                // .NET will do a JOIN for us!
+                // .Include(pet => pet.petOwnerById);
+                .Include(pet => pet.petOwner);
         }
+         [HttpGet("{id}")]
+        public ActionResult<Pet> GetById(int id) {
+            Pet pet =  _context.Pets
+                .Include(pet => pet.petOwner)
+                .SingleOrDefault(pet => pet.id == id);
+            
+            if(pet is null) {
+                return NotFound();
+            }
+
+            return pet;
+        }
+                [HttpPost]
+        public Pet Post(Pet pet) 
+        {
+            // Tell the DB context about our new bread object
+            _context.Add(pet);
+            // ...and save the bread object to the database
+            _context.SaveChanges();
+
+            // Respond back with the created bread object
+            return pet;
+        }
+
+                [HttpPut("{id}")]
+        public Pet Put(int id, Pet pet) 
+        {
+            // Our DB context needs to know the id of the bread to update
+            pet.id = id;
+
+            // Tell the DB context about our updated bread object
+            _context.Update(pet);
+
+            // ...and save the bread object to the database
+            _context.SaveChanges();
+
+            // Respond back with the created bread object
+            return pet;
+        }
+                [HttpDelete("{id}")]
+        public void Delete(int id) 
+        {
+            // Find the bread, by ID
+            Pet pet = _context.Pets.Find(id);
+
+            // Tell the DB that we want to remove this bread
+            _context.Pets.Remove(pet);
+
+            // ...and save the changes to the database
+            _context.SaveChanges();;
+        }
+
 
         // [HttpGet]
         // [Route("test")]
