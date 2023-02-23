@@ -27,17 +27,38 @@ namespace pet_hotel.Controllers
             return _context.PetOwners;
         }
         // GET /api/bakers/:id
-        // [HttpGet("{id}")]
-        // public ActionResult<PetOwner> GetById(int id) {
-        //     PetOwner petOwner =  _context.PetOwners
-        //         .SingleOrDefault(baker => baker.id == id);
+        [HttpGet("{id}")]
+        public ActionResult<PetOwner> GetById(int id) {
+            PetOwner petOwner =  _context.PetOwners
+                .SingleOrDefault(petOwner => petOwner.id == id);
             
-        //     // Return a `404 Not Found` if the baker doesn't exist
-        //     if(baker is null) {
-        //         return NotFound();
-        //     }
+            // Return a `404 Not Found` if the baker doesn't exist
+            if(petOwner is null) {
+                return NotFound();
+            }
 
-        //     return baker;
-        // }
+            return petOwner;
+        }
+                [HttpPost]
+        public PetOwner Post(PetOwner petOwner) 
+        {
+            _context.Add(petOwner);
+            _context.SaveChanges();
+
+            return petOwner;
+        }
+        // DELETE /api/breads/:id
+        [HttpDelete("{id}")]
+        public void Delete(int id) 
+        {
+            // Find the bread, by ID
+            PetOwner petOwner = _context.PetOwners.Find(id);
+
+            // Tell the DB that we want to remove this bread
+            _context.PetOwners.Remove(petOwner);
+
+            // ...and save the changes to the database
+            _context.SaveChanges();;
+        }
     }
 }
