@@ -23,5 +23,9 @@ namespace pet_hotel.Models
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) {}
         // public DbSet<MyClass> MyClassTable { get; set; }
+
+                // Add this 👇
+        // Name of field ("Bakers") is what DB table will be called!
+        public DbSet<PetOwner> PetOwners {get; set;}
     }
 }
