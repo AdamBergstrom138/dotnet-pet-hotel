@@ -10,6 +10,11 @@ namespace pet_hotel
     // id is special, EF knows it a primary key and serial!
     public int id {get; set;}
 
+
+    [Required]
+    [EmailAddress]
+    public string emailAddress {get; set;}
+
     // This is a required database field
     // This makes it NOT NULL in the database,
     // but also automatically sends back 400 errors 
@@ -17,8 +22,6 @@ namespace pet_hotel
     [Required]
     public string name {get; set;}
 
-    public string email {get; set;}
-
-    public int pets {get; set;}
+    public int petCount {get; set;}
     }
 }
