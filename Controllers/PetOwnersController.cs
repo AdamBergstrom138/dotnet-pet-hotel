@@ -12,53 +12,77 @@ namespace pet_hotel.Controllers
     public class PetOwnersController : ControllerBase
     {
         private readonly ApplicationContext _context;
-        public PetOwnersController(ApplicationContext context) {
+        public PetOwnersController(ApplicationContext context)
+        {
             _context = context;
         }
-
-        // This is just a stub for GET / to prevent any weird frontend errors that 
-        // occur when the route is missing in this controller
-        // [HttpGet]
-        // public IEnumerable<PetOwner> GetPets() {
-        //     return new List<PetOwner>();
-        // }
-                [HttpGet]
-        public IEnumerable<PetOwner> GetPets() {
+       
+        [HttpGet]
+        public IEnumerable<PetOwner> GetPets()
+        {
             return _context.PetOwners;
         }
-        // GET /api/bakers/:id
+        // GET /api/petowners/:id
         [HttpGet("{id}")]
-        public ActionResult<PetOwner> GetById(int id) {
-            PetOwner petOwner =  _context.PetOwners
+        public ActionResult<PetOwner> GetById(int id)
+        {
+            PetOwner petOwner = _context.PetOwners
                 .SingleOrDefault(petOwner => petOwner.id == id);
-            
-            // Return a `404 Not Found` if the baker doesn't exist
-            if(petOwner is null) {
+
+            // Return a `404 Not Found` if the petowner doesn't exist
+            if (petOwner is null)
+            {
                 return NotFound();
             }
 
             return petOwner;
         }
-                [HttpPost]
-        public PetOwner Post(PetOwner petOwner) 
+        
+        [HttpPost]
+        public IActionResult CreatePetOwner(PetOwner petOwner)
         {
             _context.Add(petOwner);
             _context.SaveChanges();
 
+            return CreatedAtAction(nameof(GetById), new { id = petOwner.id }, petOwner);
+        }
+
+        //UPDDATE /api/petowners/:id
+        [HttpPut("{id}")]
+        public PetOwner Put(int id, PetOwner petOwner)
+        {
+            // Our DB context needs to know the id of the petowner to update
+            petOwner.id = id;
+
+            // Tell the DB context about our updated petowner object
+            _context.Update(petOwner);
+
+            // ...and save the petowner object to the database
+            _context.SaveChanges();
+
+            // Respond back with the created petowner object
             return petOwner;
         }
-        // DELETE /api/breads/:id
+
+        // DELETE /api/petowners/:id
         [HttpDelete("{id}")]
-        public void Delete(int id) 
+        public IActionResult Delete(int id)
         {
-            // Find the bread, by ID
+            // Find the pet owner, by ID
             PetOwner petOwner = _context.PetOwners.Find(id);
 
-            // Tell the DB that we want to remove this bread
+            if (petOwner == null)
+            {
+                return NotFound(); // return a 404 Not Found if the pet owner doesn't exist
+            }
+
+            // Tell the DB that we want to remove this pet owner
             _context.PetOwners.Remove(petOwner);
 
             // ...and save the changes to the database
-            _context.SaveChanges();;
+            _context.SaveChanges();
+
+            return NoContent(); // return a 204 No Content if the pet owner was successfully deleted
         }
     }
 }
