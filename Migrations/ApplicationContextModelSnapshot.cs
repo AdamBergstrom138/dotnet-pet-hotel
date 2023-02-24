@@ -64,9 +64,6 @@ namespace dotnet_bakery.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int>("petCount")
-                        .HasColumnType("integer");
-
                     b.HasKey("id");
 
                     b.ToTable("PetOwners");

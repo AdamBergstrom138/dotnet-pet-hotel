@@ -21,7 +21,8 @@ namespace pet_hotel
     // if missing in the request body
     [Required]
     public string name {get; set;}
-
+    [NotMapped]
+    // [ForeignKey("petOwnerid")]
     public int petCount {get; set;}
     }
 }

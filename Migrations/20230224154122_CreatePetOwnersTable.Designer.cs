@@ -10,7 +10,7 @@ using pet_hotel.Models;
 namespace dotnet_bakery.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    [Migration("20230224150757_CreatePetOwnersTable")]
+    [Migration("20230224154122_CreatePetOwnersTable")]
     partial class CreatePetOwnersTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,9 +65,6 @@ namespace dotnet_bakery.Migrations
                     b.Property<string>("name")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<int>("petCount")
-                        .HasColumnType("integer");
 
                     b.HasKey("id");
 

@@ -158,5 +158,20 @@ namespace pet_hotel.Controllers
             return NoContent(); // return a 204 No Content if the pet was successfully deleted
         }
 
+        // [HttpGet("{id}")]
+        // public ActionResult<Pet> SetPetCount(int id)
+        // {
+        //     Pet pet = _context.Pets
+        //         .Include(pet => pet.petOwner)
+        //         .SingleOrDefault(pet => pet.id == id);
+
+        //     if (pet is null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return pet;
+        // }
+
     }
 }
